@@ -1,0 +1,311 @@
+.modal-lg{
+    width: 95% !important;
+}
+.filemanager {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column
+}
+
+@media (min-width:960px) {
+    .filemanager {
+        flex-direction: row
+    }
+}
+
+.filemanager td,
+.filemanager th {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.filemanager td[ng-click^=openFileDetail],
+.filemanager th[ng-click^=openFileDetail] {
+    cursor: zoom-in
+}
+
+.filemanager-folders {
+    align-self: stretch;
+    flex: 0 0 300px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
+    background-color: #e9ecef
+}
+
+@media (min-width:960px) {
+    .filemanager-folders {
+        margin-right: 0;
+        margin-bottom: -10px;
+        background-color: #f8f9fa
+    }
+}
+
+.filemanager-files {
+    align-self: stretch;
+    flex: 1 1 auto;
+    width: auto;
+    overflow-x: hidden
+}
+
+.filemanager-files thead {
+    min-height: 44px
+}
+
+.filemanager-files th {
+    padding-top: 5px;
+    position: relative
+}
+
+.filemanager-files .table {
+    width: 100%;
+    overflow-y: hidden;
+    display: inline-table
+}
+
+.filemanager-files .table .custom-checkbox {
+    margin-top: 8px
+}
+
+@media (min-width:960px) {
+    .filemanager-files {
+        padding-left: 10px
+    }
+}
+
+.filemanager-files-table {
+    max-width: 100%;
+    overflow-x: auto
+}
+
+.filemanager-actions-column {
+    width: 50px
+}
+
+.filemanager-add-folder {
+    display: block;
+    width: 100%
+}
+
+.filemanager-add-folder-form {
+    display: block;
+    padding-right: 78px;
+    position: relative;
+    width: 100%
+}
+
+.filemanager-add-folder-input {
+    padding: 3px 6px 3px 6px;
+    width: 100%
+}
+
+.filemanager-add-folder-actions {
+    position: absolute;
+    right: 0;
+    top: 0
+}
+
+.filemanager-add-folder-actions .btn {
+    padding-left: 14px;
+    padding-right: 8px
+}
+
+.filemanager-file img {
+    height: 30px;
+    width: auto
+}
+
+.filemanager-file td:last-of-type {
+    position: relative
+}
+
+.filemanager-file td:last-of-type:after {
+    border-bottom: 25px solid transparent;
+    border-right: 25px solid #495057;
+    border-top: 25px solid transparent;
+    content: "";
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    right: 390px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transition: 0s ease-in-out opacity;
+    width: 0
+}
+
+.modal .filemanager-file td:last-of-type:after {
+    right: 334px
+}
+
+.filemanager-file-detail-open td:last-of-type:after {
+    opacity: 1;
+    transition: .25s .2s ease-in-out opacity
+}
+
+.filemanager-file-selected td,
+.filemanager-file-selected th {
+    background-color: #e50060;
+    color: #fff
+}
+
+.filemanager-file-selected td .custom-color-icon,
+.filemanager-file-selected th .custom-color-icon {
+    color: #fff
+}
+
+.filemanager-file-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap
+}
+
+.filemanager-file-actions-left {
+    align-items: flex-start;
+    display: flex;
+    flex: 1 1;
+    flex-wrap: wrap
+}
+
+.filemanager-file-actions-left-spacing {
+    padding-right: 35px
+}
+
+.filemanager-file-actions-left-spacing .filemanager-search {
+    display: none
+}
+
+@media screen and (min-width:1340px) {
+    .filemanager-file-actions-left-spacing .filemanager-search {
+        display: block
+    }
+}
+
+.filemanager-upload-file {
+    margin-right: 25px
+}
+
+.filemanager-search {
+    display: none;
+    flex: 1 1;
+    padding: 3px 6px 3px 6px
+}
+
+@media (min-width:960px) {
+    .filemanager-search {
+        display: block
+    }
+}
+
+.filemanager-file-actions-right {
+    margin-left: auto
+}
+
+.filemanager-file-icon {
+    font-size: 25px;
+    line-height: 40px
+}
+
+.filemanager-dropzone {
+    background-color: rgba(0, 0, 0, .6);
+    border: 10px solid #fff;
+    bottom: 50px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, .2);
+    color: #fff;
+    left: 50px;
+    position: fixed;
+    right: 50px;
+    top: 50px;
+    z-index: 50
+}
+
+.filemanager-dropzone h2 {
+    color: #fff
+}
+
+.filemanager-dropzone-inner {
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%)
+}
+
+.filemanager-check-all {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 20px;
+    vertical-align: middle
+}
+
+.filemanager-files-counter {
+    display: inline-block;
+    font-size: 12px;
+    vertical-align: middle
+}
+
+.filemanager-fakebox {
+    background-color: #dee2e6;
+    border-radius: .3rem;
+    display: block;
+    height: 20px;
+    position: relative;
+    width: 20px
+}
+
+.filemanager-fakebox-active,
+.filemanager-file-selected .filemanager-fakebox {
+    background-color: #007bff
+}
+
+.filemanager-fakebox-active:after,
+.filemanager-file-selected .filemanager-fakebox:after {
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    color: #fff;
+    content: "check";
+    font-size: 16px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%)
+}
+
+.filemanager-file-selected .filemanager-fakebox {
+    background-color: #fff
+}
+
+.filemanager-file-selected .filemanager-fakebox:after {
+    color: #e50060
+}
+
+.filemanager-pagination {
+    display: block;
+    width: 100%;
+    max-width: 650px;
+    padding: 0;
+    margin: 25px 0 10px
+}
