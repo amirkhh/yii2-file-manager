@@ -45,7 +45,7 @@ use yii\web\UploadedFile;
  *
  * @link https://github.com/vova07/yii2-imperavi-widget
  */
-class ExploreAction extends Action
+class ListAction extends Action
 {
     /**
      * Generate a human readable size informations from provided Byte/s size
