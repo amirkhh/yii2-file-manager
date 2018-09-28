@@ -18,7 +18,7 @@
             "type": "git",
             "url": "https://github.com/amirkhh/yii2-file-manager.git"
         }
-    ]
+    ],
     "autoload": {
         "psr-4": {
             "amirkh\\FileManager\\": ""
