@@ -1,6 +1,6 @@
 <?php
 
-namespace amirkh\FileManager;
+namespace amirkhh\filemanager;
 
 use app\components\General;
 use app\models\File;

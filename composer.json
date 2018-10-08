@@ -1,5 +1,5 @@
 {
-    "name": "amirkh/yii2-file-manager",
+    "name": "amirkhh/yii2-file-manager",
     "description": "Upload and Manage Your Uploaded File in Yii2",
     "type": "yii2-extension",
     "keywords": ["yii2","File.Manager"],
@@ -21,7 +21,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "amirkh\\FileManager\\": ""
+            "amirkhh\\filemanager\\": ""
         }
-    }
+    },
+    "repositories":[
+        {
+            "type": "git",
+            "url": "git@github.com/amirkhh/yii2-file-manager.git"
+        }
+    ]
 }

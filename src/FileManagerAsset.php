@@ -1,6 +1,6 @@
 <?php
 
-namespace amirkh\FileManager;
+namespace amirkhh\filemanager;
 
 use yii\web\AssetBundle;
 

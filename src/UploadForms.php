@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\admin\models;
+namespace amirkhh\filemanager;
 
 use app\components\FileHelper;
 use Yii;
