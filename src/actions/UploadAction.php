@@ -58,10 +58,9 @@ class UploadAction extends Action
 
         if(Yii::$app->request->isPost)
         {
-            $model->file = UploadedFile::getInstanceByName('file');
+            $model->files = UploadedFile::getInstancesByName('files');
 
-            if(($file = $model->upload()) !== false)
-            {
+            if (($file = $model->upload()) !== false) {
                 $data['ok'] = true;
             }
         }

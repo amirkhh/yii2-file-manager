@@ -309,3 +309,46 @@
     padding: 0;
     margin: 25px 0 10px
 }
+.thumb {
+    width: 24px;
+    height: 24px;
+    float: none;
+    position: relative;
+    top: 7px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+
+/* Me */
+.progress {
+    display: flex;
+    width: 100% !important;
+    height: 4px !important;
+    border: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+}
+
+.progress div {
+    font-size: smaller;
+    background: #e50060;
+    width: 0;
+}
+.selectedRow{
+    background-color: #e50060 !important;
+    color: #fff;
+}
+.fileListSelected{
+    list-style-type: none;
+    margin: 5px 0;
+    padding: 0;
+}
+.filemanager-search{
+    margin: 2px 10px 0 0;
+}
+.modal-header .close{
+    float: left;
+}

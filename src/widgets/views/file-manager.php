@@ -2,92 +2,105 @@
 
 /** @var \yii\web\View $this */
 /** @var \app\modules\admin\models\UploadForms $model */
+/** @var string $fileUploadUrl */
+/** @var string $fileListUrl */
 /** @var ActiveForm $form */
 /** @var string $filesOutputName */
 /** @var string $files */
+/** @var string $accept */
+/** @var string $maxFileCount */
 
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
-use amirkh\FileManager\FileManagerAsset;
+use app\assets\AngularAsset;
 
-FileManagerAsset::register($this);
+AngularAsset::register($this);
 
-/*$this->registerJsFile('@storage-url/js/file-manager.js', ['depends' => AngularAsset::className()]);
-$this->registerCssFile('@storage-url/css/file-manager.css');*/
+$this->registerJs('
+var fileUploadUrl = "'.$fileUploadUrl.'";
+var fileListUrl   = "'.$fileListUrl.'";
+var maxFileCount  = "'.$maxFileCount.'";
+', \yii\web\View::POS_BEGIN);
+
+$this->registerJsFile('@storage-url/js/ng-file-upload.js', ['depends' => AngularAsset::className()]);
+$this->registerJsFile('@storage-url/js/paging.js', ['depends' => AngularAsset::className()]);
+$this->registerJsFile('@storage-url/js/file-manager.js', ['depends' => AngularAsset::className()]);
+$this->registerCssFile('@storage-url/css/file-manager.css');
 ?>
 
 <div ng-app="fileManager" ng-controller="fileController">
 
-<p>افزودن فایل:</p>
+    <p>افزودن فایل:</p>
 
-<?php
-Modal::begin([
-    'id' => 'modal',
-    'size' => 'modal-lg',
-    'closeButton' => [
-        'class' => 'close',
-        'data-dismiss' =>'modal',
-    ],
-    'clientOptions' => [
-        'backdrop' => false, 'keyboard' => true
-    ]
-]);
-?>
+    <?php
+    Modal::begin([
+        'id' => 'modal',
+        'size' => 'modal-lg',
+        'closeButton' => [
+            'class' => 'close',
+            'data-dismiss' =>'modal',
+        ],
+        'clientOptions' => [
+            'backdrop' => false, 'keyboard' => true
+        ]
+    ]);
+    ?>
 
-<div id="fileList" class="entityListPage">
+    <div class="progress" ng-show="progress >= 0">
+        <div style="width:{{progress}}%"></div>
+    </div>
 
-    <div class="filemanager-files">
-        <div class="filemanager-file-actions">
-            <div class="filemanager-file-actions-left">
+    <div id="fileList" class="entityListPage">
 
-                <!-- Start Upload File -->
-                <div class="form-group">
-                    <?= $form->field($model, 'file')->fileInput(['id' => 'myFileField', 'class' => 'hide', 'file-model' => 'myFile', 'onchange' => 'uploadFile()'])->label(false) ?>
+        <div class="filemanager-files">
+            <div class="filemanager-file-actions">
+                <div class="filemanager-file-actions-left">
 
-                    <button type="button" trigger-file class="btn btn-primary">Upload File</button>
+                    <!-- Start Upload File -->
+                    <div class="form-group">
+
+                        <?= $form->field($model, 'files[]')->fileInput(['multiple' => true, 'accept' => $accept, 'ngf-select' => 'true', 'ng-model' => '$uploadfiles', 'ng-change' => 'uploadFiles($uploadfiles)', 'class' => 'filesInput hide'])->label(false) ?>
+
+                        <!--<input type="file" ngf-select ng-model="$uploadfiles" multiple
+                               name="file"
+                               accept="image/*" ngf-max-size="2MB"
+                               ngf-model-invalid="errorFile" ng-change="uploadFiles($uploadfiles)" />-->
+                    </div>
+                    <!-- End Upload File -->
+
+                    <?= Html::button('آپلود فایل', ['class' => 'btn btn-success aliasFileInput']) ?>
+
+                    <?= Html::textInput('filter', null, [
+                        'class' => 'filemanager-search',
+                        'placeholder' => 'نام فایل را جستجو کنید . . .',
+                        'ng-change' => 'filter()',
+                        'ng-model' => 'filterQuery',
+                        'ng-model-options' => '{debounce: 1000}',
+                    ]) ?>
 
                 </div>
-
-                <div>{{serverResponse}}</div>
-                <!-- End Upload File -->
-
-                <p>
-                    <input class="filemanager-search" type="text" placeholder="Enter search term...">
-                </p>
-
             </div>
-        </div>
-        <div class="filemanager-files-table">
-            <div class="table-responsive-wrapper">
-                <table class="table table-hover table-striped table-align-middle mt-4">
-                    <thead class="thead-default">
+            <div class="filemanager-files-table">
+                <div class="table-responsive-wrapper">
+                    <table class="table table-hover table-striped table-align-middle mt-4">
+                        <thead class="thead-default">
                         <tr>
-                            <th>
-                                <div class="table-sorter-wrapper is-active">
-                                    <div class="table-sorter table-sorter-up is-sorting ng-scope">
-                                        <span>Name</span>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <span>Type</span>
-                            </th>
-                            <th>
-                                <span>Creation Date</span>
-                            </th>
-                            <th>
-                                <span>File size</span>
-                            </th>
+                            <th>انتخاب</th>
+                            <th>پیشنمایش</th>
+                            <th>نام</th>
+                            <th>نوع</th>
+                            <th>سایز</th>
+                            <th>زمان ایجاد</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <!-- ngRepeat: file in filesData -->
-                        <tr ng-repeat="model in models track by $index" class="filemanager-file ng-scope">
+                        <tr ng-repeat="model in models track by $index" class="filemanager-file ng-scope" ng-class="{'selectedRow' : currentId == model.id}">
                             <th scope="row" ng-click="toggleSelection(file)">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" ng-click="chooseFile(model.id)" ng-checked="currentId == model.id">
+                                    <input type="checkbox" class="form-check-input" ng-click="chooseFile($index)" ng-checked="currentId == model.id">
                                     <label></label>
                                 </div>
                             </th>
@@ -95,32 +108,45 @@ Modal::begin([
                                 <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/uploads/files/{{model.name}}"></span>
                             </td>
                             <td>{{model.name}}</td>
+                            <td>{{model.extension}}</td>
                             <td>{{model.size}}</td>
-                            <td>{{model.createdAt}} PM</td>
+                            <td>{{model.createdAt}}</td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <section>
+                    <div paging class="col-xs-12 text-center"
+                         page="page.currentPage"
+                         page-size="page.pageSize"
+                         total="page.total"
+                         paging-action="changePage(page)"
+                         hide-if-empty="true"
+                         show-prev-next="true"
+                         show-first-last="true">
+                </section>
             </div>
 
         </div>
+
     </div>
 
-</div>
+    <?php
+    Modal::end();
+    ?>
 
-<?php
-Modal::end();
-?>
+    <ul ng-cloak="" class="fileListSelected">
+        <li ng-repeat="file in files track by $index">
+            <?= Html::button('{{file.label}}', ['class' => 'btn btn-primary', 'ng-click' => 'openModal($index, file.id)']) ?>
+            <?= Html::button('-', ['class' => 'btn btn-danger', 'ng-click' => 'delete($index)']) ?>
+        </li>
+    </ul>
 
-<ul ng-cloak="">
-    <li ng-repeat="file in files track by $index">
-        <?= Html::button('{{file.label}}', ['class' => 'btn btn-primary', 'ng-click' => 'openModal($index, file.id)']) ?>
-        <?= Html::button('-', ['class' => 'btn btn-danger', 'ng-click' => 'delete($index)']) ?>
-    </li>
-</ul>
-
-<p>
-    <?= Html::hiddenInput($filesOutputName, $files == null ? '[]' : $files, ['class' => 'filesData']) ?>
-    <?= Html::button('+', ['class' => 'btn btn-info', 'ng-click' => 'addChooseFile()']) ?>
-</p>
+    <p>
+        <?= Html::hiddenInput($filesOutputName, $files == null ? '[]' : $files, ['class' => 'filesData']) ?>
+        <?= Html::button('+', ['class' => 'btn btn-info btnAddFile', 'ng-click' => 'addChooseFile()']) ?>
+    </p>
 
 </div>

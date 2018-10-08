@@ -1,5 +1,5 @@
 <?php
-namespace amirkh\FileManager;
+namespace app\modules\admin\models;
 
 use app\components\FileHelper;
 use Yii;
@@ -12,12 +12,12 @@ class UploadForms extends Model
     /**
      * @var UploadedFile[]
      */
-    public $file;
+    public $files;
 
     public function rules()
     {
         return [
-            ['file', 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 4],
+            ['files', 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 4],
         ];
     }
 
@@ -28,39 +28,42 @@ class UploadForms extends Model
             $userId = Yii::$app->user->id;
             $now    = time();
 
-            if(!in_array($this->file->type, FileHelper::DANGEROUS_MIME_TYPES) && !in_array($this->file->extension, FileHelper::DANGEROUS_EXTENSIONS))
+            foreach($this->files as $file)
             {
-                /* Upload Files */
-                $dir      = 'uploads/files/';
-                $fileName = Yii::$app->security->generateRandomString(5) . time() . '.' . strtolower($this->file->extension);
-                $file     = $dir.$fileName;
-                $hashFile = FileHelper::md5sum($this->file->tempName);
-
-                if(($model = File::find()->where(['hash_file' => $hashFile])->one()) == null)
+                if(!in_array($file->type, FileHelper::DANGEROUS_MIME_TYPES) && !in_array($file->extension, FileHelper::DANGEROUS_EXTENSIONS))
                 {
-                    if(!file_exists($dir)) mkdir($dir, 0777, true);
+                    /* Upload Files */
+                    $dir      = 'uploads/files/';
+                    $fileName = Yii::$app->security->generateRandomString(5) . time() . '.' . strtolower($file->extension);
+                    $filePath = $dir.$fileName;
+                    $hashFile = FileHelper::md5sum($file->tempName);
 
-                    $this->file->saveAs($file);
+                    if(($model = File::find()->where(['hash_file' => $hashFile])->one()) == null)
+                    {
+                        if(!file_exists($dir)) mkdir($dir, 0777, true);
 
-                    $model = new File();
+                        $file->saveAs($filePath);
 
-                    $model->user_id = $userId;
-                    $model->name = $fileName;
-                    $model->mime_type = $this->file->type;
-                    $model->extension = $this->file->extension;
-                    $model->hash_file = $hashFile;
-                    $model->size = $this->file->size;
-                    $model->created_at = $now;
+                        $model = new File();
 
-                    $model->save();
+                        $model->user_id    = $userId;
+                        $model->name       = $fileName;
+                        $model->mime_type  = $file->type;
+                        $model->extension  = $file->extension;
+                        $model->hash_file  = $hashFile;
+                        $model->size       = $file->size;
+                        $model->created_at = $now;
+
+                        $model->save();
+                    }
                 }
+                else
+                {
+                    continue;
+                }
+            }
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         else
         {

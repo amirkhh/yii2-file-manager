@@ -2,9 +2,11 @@
 
 namespace amirkh\FileManager;
 
+use app\components\General;
 use app\models\File;
 use Yii;
 use yii\base\Action;
+use yii\data\Pagination;
 use yii\web\Response;
 use yii\web\UploadedFile;
 
@@ -71,9 +73,19 @@ class ListAction extends Action
     {
         $data['ok'] = false;
 
-        if(($models = File::find()->all()) != null)
+        $queryString = Yii::$app->request->get('queryString');
+
+        $query = File::find();
+
+        if($queryString !== null)
+            $query->where(['LIKE', 'name', $queryString]);
+
+        $pagination = new Pagination(['totalCount' => $query->count(), 'defaultPageSize' => 13]);
+
+        if(($models = $query->offset($pagination->offset)->limit($pagination->limit)->orderBy(['id' => SORT_DESC])->all()) != null)
         {
-            $data['ok'] = true;
+            $data['ok']         = true;
+            $data['pagination'] = $pagination;
 
             /** @var File $model */
             foreach ($models as $model)
@@ -86,7 +98,7 @@ class ListAction extends Action
                     'isImage'   => (in_array($model->extension, ['jpg', 'png', 'gif'])),
                     'extension' => $model->extension,
                     'size'      => $this->humanReadableFilesize($model->size),
-                    'createdAt' => $model->created_at,
+                    'createdAt' => General::persianDate($model->created_at, 'HH:mm - yyyy/MM/dd', 'fa-IR'),
                 ];
             }
         }
