@@ -23,7 +23,6 @@ class FileManagerAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
-        'yii\jui\JuiAsset',
         AngularAsset::class,
     ];
 }
