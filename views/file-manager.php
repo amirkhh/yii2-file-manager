@@ -14,20 +14,15 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
-use app\assets\AngularAsset;
+use amirkhh\filemanager\FileManagerAsset;
 
-AngularAsset::register($this);
+FileManagerAsset::register($this);
 
 $this->registerJs('
 var fileUploadUrl = "'.$fileUploadUrl.'";
 var fileListUrl   = "'.$fileListUrl.'";
 var maxFileCount  = "'.$maxFileCount.'";
 ', \yii\web\View::POS_BEGIN);
-
-$this->registerJsFile('@storage-url/js/ng-file-upload.js', ['depends' => AngularAsset::className()]);
-$this->registerJsFile('@storage-url/js/paging.js', ['depends' => AngularAsset::className()]);
-$this->registerJsFile('@storage-url/js/file-manager.js', ['depends' => AngularAsset::className()]);
-$this->registerCssFile('@storage-url/css/file-manager.css');
 ?>
 
 <div ng-app="fileManager" ng-controller="fileController">

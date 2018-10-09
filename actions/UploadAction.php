@@ -1,6 +1,6 @@
 <?php
 
-namespace amirkhh\filemanager;
+namespace amirkhh\filemanager\actions;
 
 use Yii;
 use yii\base\Action;

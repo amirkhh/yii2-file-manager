@@ -4,7 +4,7 @@ var fileManager = angular.module('fileManager', ['ngFileUpload', 'bw.paging']);
 
 fileManager.controller('fileController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
 
-    $scope.baseUrl      = baseUrl;
+    $scope.baseUrl      = '';
     $scope.result       = false;
     $scope.emptyResult  = false;
     $scope.requestData  = null;

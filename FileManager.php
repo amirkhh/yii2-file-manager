@@ -10,9 +10,9 @@ class FileManager extends Widget
     public $form;
 
     public $files;/** Already Files Uploaded For Edit Page */
-    public $fileListUrl     = '../file/file-list';
+    public $fileListUrl     = 'site/file-list';
+    public $fileUploadUrl   = 'site/file-upload';
     public $filesOutputName = 'filesData';
-    public $fileUploadUrl   = '../file/file-upload';
     public $allowExtension  = null;
     public $accept          = 'image/*';
     public $maxFileCount    = 10;
