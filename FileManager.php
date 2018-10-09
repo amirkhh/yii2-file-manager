@@ -3,7 +3,7 @@
 namespace amirkhh\filemanager;
 
 use yii\base\Widget;
-use yii\web\View;
+use amirkhh\filemanager\models\UploadForms;
 
 class FileManager extends Widget
 {
@@ -12,6 +12,7 @@ class FileManager extends Widget
     public $files;/** Already Files Uploaded For Edit Page */
     public $fileListUrl     = 'site/file-list';
     public $fileUploadUrl   = 'site/file-upload';
+    //public $uploadDirectory = 'uploads/files/';
     public $filesOutputName = 'filesData';
     public $allowExtension  = null;
     public $accept          = 'image/*';

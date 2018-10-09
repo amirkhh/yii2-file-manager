@@ -50,6 +50,13 @@ class SiteController extends Controller
 }
 ```
 
+### Update your database schema
+you need to do is updating your database schema by applying the migration:
+
+```
+$ php yii migrate/up --migrationPath=@vendor/amirkh/yii2-file-manager/migrations
+```
+
 ### Call widget
 
 Once the extension is installed, simply use it in your code by  :

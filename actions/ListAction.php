@@ -2,70 +2,37 @@
 
 namespace amirkhh\filemanager\actions;
 
-use app\components\General;
-use app\models\File;
 use Yii;
+use amirkhh\filemanager\models\File;
 use yii\base\Action;
 use yii\data\Pagination;
 use yii\web\Response;
-use yii\web\UploadedFile;
 
 /**
- * UploadFileAction for images and files.
+ * UploadFileAction for upload files.
  *
  * Usage:
  *
  * ```php
- * public function actions()
+ * class SiteController extends Controller
  * {
- *     return [
- *         'upload-image' => [
- *             'class' => 'vova07\imperavi\actions\UploadFileAction',
- *             'url' => 'http://my-site.com/statics/',
- *             'path' => '/var/www/my-site.com/web/statics',
- *             'unique' => true,
- *             'validatorOptions' => [
- *                 'maxWidth' => 1000,
- *                 'maxHeight' => 1000
- *             ]
- *         ],
- *         'file-upload' => [
- *             'class' => 'vova07\imperavi\actions\UploadFileAction',
- *             'url' => 'http://my-site.com/statics/',
- *             'path' => '/var/www/my-site.com/web/statics',
- *             'uploadOnlyImage' => false,
- *             'translit' => true,
- *             'validatorOptions' => [
- *                 'maxSize' => 40000
- *             ]
- *         ]
- *     ];
+ *     public function actions()
+ *     {
+ *         return [
+ *             'file-list' => [
+ *                 'class' => ListAction::class,
+ *             ],
+ *         ];
+ *     }
  * }
  * ```
  *
- * @author Vasile Crudu <bazillio07@yandex.ru>
+ * @author Amir Khoshhal <amirkhoshhal@gmail.com>
  *
- * @link https://github.com/vova07/yii2-imperavi-widget
+ * @link https://github.com/amirkhh/yii2-file-manager
  */
 class ListAction extends Action
 {
-    /**
-     * Generate a human readable size informations from provided Byte/s size
-     *
-     * @param integer $size The size to convert in Byte
-     * @return string The readable size definition
-     */
-    private function humanReadableFilesize($size)
-    {
-        $mod = 1024;
-        $units = explode(' ', 'B KB MB GB TB PB');
-        for ($i = 0; $size > $mod; ++$i) {
-            $size /= $mod;
-        }
-
-        return round($size, 2).' '.$units[$i];
-    }
-
     /**
      * @inheritdoc
      */
@@ -92,13 +59,12 @@ class ListAction extends Action
             {
                 $data['models'][$model->id] = [
                     'id'        => $model->id,
-                    'user_id'   => $model->user_id,
                     'name'      => $model->name,
                     'mimeType'  => $model->mime_type,
                     'isImage'   => (in_array($model->extension, ['jpg', 'png', 'gif'])),
                     'extension' => $model->extension,
                     'size'      => $this->humanReadableFilesize($model->size),
-                    'createdAt' => General::persianDate($model->created_at, 'HH:mm - yyyy/MM/dd', 'fa-IR'),
+                    'createdAt' => $this->persianDate($model->created_at, 'HH:mm - yyyy/MM/dd', 'fa-IR'),
                 ];
             }
         }
@@ -106,5 +72,35 @@ class ListAction extends Action
         $response         = Yii::$app->response;
         $response->format = Response::FORMAT_JSON;
         $response->data   = $data;
+    }
+
+    /**
+     * Generate a human readable size informations from provided Byte/s size
+     *
+     * @param integer $size The size to convert in Byte
+     * @return string The readable size definition
+     */
+    private function humanReadableFilesize($size)
+    {
+        $mod = 1024;
+        $units = explode(' ', 'B KB MB GB TB PB');
+        for ($i = 0; $size > $mod; ++$i) {
+            $size /= $mod;
+        }
+
+        return round($size, 2).' '.$units[$i];
+    }
+
+    /**
+     * @param null $timestamp
+     * @param string $format
+     * @param string $calenderLang
+     * @return string
+     */
+    private function persianDate($timestamp = null, $format = 'yyyy/MM/dd', $calenderLang = 'en-US')
+    {
+        if($timestamp == null) $timestamp = time();
+        $fmt = datefmt_create($calenderLang."@calendar=persian", \IntlDateFormatter::FULL, \IntlDateFormatter::NONE, 'Asia/Tehran', \IntlDateFormatter::TRADITIONAL, $format);
+        return $fmt->format($timestamp);
     }
 }

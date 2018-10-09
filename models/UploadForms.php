@@ -1,11 +1,10 @@
 <?php
-namespace amirkhh\filemanager;
+namespace amirkhh\filemanager\models;
 
-use app\components\FileHelper;
 use Yii;
-use app\models\File;
 use yii\base\Model;
 use yii\web\UploadedFile;
+use amirkhh\filemanager\models\File;
 
 class UploadForms extends Model
 {
@@ -13,6 +12,36 @@ class UploadForms extends Model
      * @var UploadedFile[]
      */
     public $files;
+
+    private $dangerousMimeTypes = [
+        'application/x-msdownload',
+        'application/x-msdos-program',
+        'application/x-msdos-windows',
+        'application/x-download',
+        'application/bat',
+        'application/x-bat',
+        'application/com',
+        'application/x-com',
+        'application/exe',
+        'application/x-exe',
+        'application/x-winexe',
+        'application/x-winhlp',
+        'application/x-winhelp',
+        'application/x-javascript',
+        'application/hta',
+        'application/x-ms-shortcut',
+        'application/octet-stream',
+        'vms/exe',
+        'text/javascript',
+        'text/scriptlet',
+        'text/x-php',
+        'text/plain',
+        'application/x-spss',
+    ];
+
+    private $dangerousExtensions = [
+        'html', 'php', 'phtml', 'php3', 'exe', 'bat', 'js',
+    ];
 
     public function rules()
     {
@@ -25,18 +54,17 @@ class UploadForms extends Model
     {
         if($this->validate() || true)
         {
-            $userId = Yii::$app->user->id;
-            $now    = time();
+            $now = time();
 
             foreach($this->files as $file)
             {
-                if(!in_array($file->type, FileHelper::DANGEROUS_MIME_TYPES) && !in_array($file->extension, FileHelper::DANGEROUS_EXTENSIONS))
+                if(!in_array($file->type, $this->dangerousMimeTypes) && !in_array($file->extension, $this->dangerousExtensions))
                 {
                     /* Upload Files */
                     $dir      = 'uploads/files/';
                     $fileName = Yii::$app->security->generateRandomString(5) . time() . '.' . strtolower($file->extension);
                     $filePath = $dir.$fileName;
-                    $hashFile = FileHelper::md5sum($file->tempName);
+                    $hashFile = $this->md5sum($file->tempName);
 
                     if(($model = File::find()->where(['hash_file' => $hashFile])->one()) == null)
                     {
@@ -46,7 +74,6 @@ class UploadForms extends Model
 
                         $model = new File();
 
-                        $model->user_id    = $userId;
                         $model->name       = $fileName;
                         $model->mime_type  = $file->type;
                         $model->extension  = $file->extension;
@@ -69,5 +96,10 @@ class UploadForms extends Model
         {
             return false;
         }
+    }
+
+    private function md5sum($sourceFile)
+    {
+        return file_exists($sourceFile) ? hash_file('md5', $sourceFile) : false;
     }
 }

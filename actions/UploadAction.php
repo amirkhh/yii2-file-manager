@@ -6,43 +6,30 @@ use Yii;
 use yii\base\Action;
 use yii\web\Response;
 use yii\web\UploadedFile;
+use amirkhh\filemanager\models\UploadForms;
 
 /**
- * UploadFileAction for images and files.
+ * UploadFileAction for upload files.
  *
  * Usage:
  *
  * ```php
- * public function actions()
+ * class SiteController extends Controller
  * {
- *     return [
- *         'upload-image' => [
- *             'class' => 'vova07\imperavi\actions\UploadFileAction',
- *             'url' => 'http://my-site.com/statics/',
- *             'path' => '/var/www/my-site.com/web/statics',
- *             'unique' => true,
- *             'validatorOptions' => [
- *                 'maxWidth' => 1000,
- *                 'maxHeight' => 1000
+ *     public function actions()
+ *     {
+ *         return [
+ *             'file-upload' => [
+ *                 'class' => UploadAction::class,
  *             ]
- *         ],
- *         'file-upload' => [
- *             'class' => 'vova07\imperavi\actions\UploadFileAction',
- *             'url' => 'http://my-site.com/statics/',
- *             'path' => '/var/www/my-site.com/web/statics',
- *             'uploadOnlyImage' => false,
- *             'translit' => true,
- *             'validatorOptions' => [
- *                 'maxSize' => 40000
- *             ]
- *         ]
- *     ];
+ *         ];
+ *     }
  * }
  * ```
  *
- * @author Vasile Crudu <bazillio07@yandex.ru>
+ * @author Amir Khoshhal <amirkhoshhal@gmail.com>
  *
- * @link https://github.com/vova07/yii2-imperavi-widget
+ * @link https://github.com/amirkhh/yii2-file-manager
  */
 class UploadAction extends Action
 {
