@@ -21,11 +21,40 @@ or add
 
 to the require section of your `composer.json` file.
 
+### Configure actions
 
-Usage
------
+For using file manager you must create and configure actions in  SiteController or any Controller you like. See complete example with actions for list and upload:
+
+```php
+<?php
+
+namespace app\controllers;
+
+use amirkhh\filemanager\actions\ListAction;
+use amirkhh\filemanager\actions\UploadAction;
+use yii\web\Controller;
+
+class SiteController extends Controller
+{
+    public function actions()
+    {
+        return [
+            'file-list' => [
+                'class' => ListAction::class,
+            ],
+            'file-upload' => [
+                'class' => UploadAction::class,
+            ]
+        ];
+    }
+}
+```
+
+### Call widget
 
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \amirkh\FileManager\AutoloadExample::widget(); ?>```
+<?= \amirkhh\filemanager\FileManager::widget(['form' => $form]) ?>
+```
+

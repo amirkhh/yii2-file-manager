@@ -2,7 +2,6 @@
 
 namespace amirkhh\filemanager;
 
-use app\assets\AngularAsset;
 use yii\web\AssetBundle;
 
 
@@ -15,7 +14,6 @@ class FileManagerAsset extends AssetBundle
     ];
 
     public $js = [
-        'js/angular.min.js',
         'js/ng-file-upload.js',
         'js/paging.js',
         'js/file-manager.js',
