@@ -51,7 +51,7 @@ class FileManager extends Widget
     public function run()
     {
         if($this->form == null)
-            throw new BadRequestHttpException('پارامتر فرم اجباری است.');
+            throw new BadRequestHttpException(FileManager::t('messages', 'Please Send "form" Parameter.'));
 
         $model = new UploadForms();
 
