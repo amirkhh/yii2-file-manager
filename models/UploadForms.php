@@ -50,7 +50,7 @@ class UploadForms extends Model
         ];
     }
 
-    public function upload()
+    public function upload($uploadDirectory)
     {
         if($this->validate() || true)
         {
@@ -61,7 +61,7 @@ class UploadForms extends Model
                 if(!in_array($file->type, $this->dangerousMimeTypes) && !in_array($file->extension, $this->dangerousExtensions))
                 {
                     /* Upload Files */
-                    $dir      = 'uploads/files/';
+                    $dir      = $uploadDirectory;
                     $fileName = Yii::$app->security->generateRandomString(5) . time() . '.' . strtolower($file->extension);
                     $filePath = $dir.$fileName;
                     $hashFile = $this->md5sum($file->tempName);

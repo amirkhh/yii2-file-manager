@@ -41,9 +41,12 @@ class SiteController extends Controller
         return [
             'file-list' => [
                 'class' => ListAction::class,
+                'uploadDirectory' => 'uploads/files/',# Optional
+                'pageSize' => 13,# Optional, For Pagination
             ],
             'file-upload' => [
                 'class' => UploadAction::class,
+                'uploadDirectory' => 'uploads/files/',# Optional
             ]
         ];
     }

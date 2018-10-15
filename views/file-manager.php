@@ -1,7 +1,7 @@
 <?php
 
 /** @var \yii\web\View $this */
-/** @var \app\modules\admin\models\UploadForms $model */
+/** @var \amirkhh\filemanager\models\UploadForms $model */
 /** @var string $fileUploadUrl */
 /** @var string $fileListUrl */
 /** @var ActiveForm $form */
@@ -100,7 +100,7 @@ var maxFileCount  = "'.$maxFileCount.'";
                                 </div>
                             </th>
                             <td class="text-center ng-isolate-scope">
-                                <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/uploads/files/{{model.name}}"></span>
+                                <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/{{model.name}}"></span>
                             </td>
                             <td>{{model.name}}</td>
                             <td>{{model.extension}}</td>

@@ -4,15 +4,15 @@ namespace amirkhh\filemanager;
 
 use yii\base\Widget;
 use amirkhh\filemanager\models\UploadForms;
+use yii\web\BadRequestHttpException;
 
 class FileManager extends Widget
 {
     public $form;
 
     public $files;/** Already Files Uploaded For Edit Page */
-    public $fileListUrl     = 'site/file-list';
-    public $fileUploadUrl   = 'site/file-upload';
-    //public $uploadDirectory = 'uploads/files/';
+    public $fileListUrl     = '../site/file-list';
+    public $fileUploadUrl   = '../site/file-upload';
     public $filesOutputName = 'filesData';
     public $allowExtension  = null;
     public $accept          = 'image/*';
@@ -23,6 +23,9 @@ class FileManager extends Widget
      */
     public function run()
     {
+        if($this->form == null)
+            throw new BadRequestHttpException('پارامتر فرم اجباری است.');
+
         $model = new UploadForms();
 
         return $this->render('file-manager', [

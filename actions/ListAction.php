@@ -21,6 +21,8 @@ use yii\web\Response;
  *         return [
  *             'file-list' => [
  *                 'class' => ListAction::class,
+ *                 'uploadDirectory' => 'uploads/files/',# Optional
+ *                 'pageSize' => 13,# Optional, For Pagination
  *             ],
  *         ];
  *     }
@@ -33,6 +35,10 @@ use yii\web\Response;
  */
 class ListAction extends Action
 {
+    public $uploadDirectory = 'uploads/files/';
+
+    public $pageSize = 13;
+
     /**
      * @inheritdoc
      */
@@ -47,7 +53,7 @@ class ListAction extends Action
         if($queryString !== null)
             $query->where(['LIKE', 'name', $queryString]);
 
-        $pagination = new Pagination(['totalCount' => $query->count(), 'defaultPageSize' => 13]);
+        $pagination = new Pagination(['totalCount' => $query->count(), 'defaultPageSize' => $this->pageSize]);
 
         if(($models = $query->offset($pagination->offset)->limit($pagination->limit)->orderBy(['id' => SORT_DESC])->all()) != null)
         {
@@ -59,7 +65,7 @@ class ListAction extends Action
             {
                 $data['models'][$model->id] = [
                     'id'        => $model->id,
-                    'name'      => $model->name,
+                    'name'      => $this->uploadDirectory.$model->name,
                     'mimeType'  => $model->mime_type,
                     'isImage'   => (in_array($model->extension, ['jpg', 'png', 'gif'])),
                     'extension' => $model->extension,

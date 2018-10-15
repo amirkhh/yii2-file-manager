@@ -21,6 +21,7 @@ use amirkhh\filemanager\models\UploadForms;
  *         return [
  *             'file-upload' => [
  *                 'class' => UploadAction::class,
+ *                 'uploadDirectory' => 'uploads/files/',# Optional
  *             ]
  *         ];
  *     }
@@ -33,6 +34,7 @@ use amirkhh\filemanager\models\UploadForms;
  */
 class UploadAction extends Action
 {
+    public $uploadDirectory = 'uploads/files/';
 
     /**
      * @inheritdoc
@@ -47,7 +49,7 @@ class UploadAction extends Action
         {
             $model->files = UploadedFile::getInstancesByName('files');
 
-            if (($file = $model->upload()) !== false) {
+            if (($file = $model->upload($this->uploadDirectory)) !== false) {
                 $data['ok'] = true;
             }
         }
