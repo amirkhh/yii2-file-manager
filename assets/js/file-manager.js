@@ -120,7 +120,8 @@ fileManager.controller('fileController', ['$scope', '$http', 'Upload', '$timeout
             Upload.upload({
                 url: fileUploadUrl,
                 data: {
-                    files: files
+                    files: files,
+					_csrf: yii.getCsrfToken()
                 }
             }).then(function (response) {
                 $timeout(function () {

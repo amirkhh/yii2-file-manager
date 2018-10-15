@@ -18,7 +18,6 @@ class m180927_194229_file extends Migration
             'mime_type' => $this->string(255)->notNull(),
             'extension' => $this->string(255)->notNull(),
             'hash_file' => $this->string(255)->notNull(),
-            'hash_name' => $this->string(255)->notNull(),
             'size' => $this->integer(11)->notNull(),
             'created_at' => $this->integer(11)->notNull(),
         ]);
