@@ -52,7 +52,7 @@ class UploadForms extends Model
 
     public function upload($uploadDirectory)
     {
-        if($this->validate() || true)
+        if($this->validate())
         {
             $now = time();
 
