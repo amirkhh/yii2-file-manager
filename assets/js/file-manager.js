@@ -1,6 +1,6 @@
 
 
-var fileManager = angular.module('fileManager', ['ngFileUpload', 'bw.paging']);
+let fileManager = angular.module('fileManager', ['ngFileUpload', 'bw.paging']);
 
 fileManager.controller('fileController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
 
@@ -14,7 +14,9 @@ fileManager.controller('fileController', ['$scope', '$http', 'Upload', '$timeout
 
     $scope.addChooseFile = function() {
 
-        $scope.files.push({id: -1, label: 'انتخاب فایل'});
+        let fileManagerChooseFileLabel = $('.fileManagerLabel').val();
+
+        $scope.files.push({id: -1, label: fileManagerChooseFileLabel});
 
         toggleFileAddButton();
     };

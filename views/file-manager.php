@@ -14,6 +14,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
+use amirkhh\filemanager\FileManager;
 use amirkhh\filemanager\FileManagerAsset;
 
 FileManagerAsset::register($this);
@@ -27,7 +28,7 @@ var maxFileCount  = "'.$maxFileCount.'";
 
 <div ng-app="fileManager" ng-controller="fileController">
 
-    <p>افزودن فایل:</p>
+    <p><?= FileManager::t('messages', 'Add File') ?>:</p>
 
     <?php
     Modal::begin([
@@ -65,11 +66,11 @@ var maxFileCount  = "'.$maxFileCount.'";
                     </div>
                     <!-- End Upload File -->
 
-                    <?= Html::button('آپلود فایل', ['class' => 'btn btn-success aliasFileInput']) ?>
+                    <?= Html::button(FileManager::t('messages', 'Upload'), ['class' => 'btn btn-success aliasFileInput']) ?>
 
                     <?= Html::textInput('filter', null, [
                         'class' => 'filemanager-search',
-                        'placeholder' => 'نام فایل را جستجو کنید . . .',
+                        'placeholder' => FileManager::t('messages', 'Search File Name . . .'),
                         'ng-change' => 'filter()',
                         'ng-model' => 'filterQuery',
                         'ng-model-options' => '{debounce: 1000}',
@@ -82,12 +83,12 @@ var maxFileCount  = "'.$maxFileCount.'";
                     <table class="table table-hover table-striped table-align-middle mt-4">
                         <thead class="thead-default">
                         <tr>
-                            <th>انتخاب</th>
-                            <th>پیشنمایش</th>
-                            <th>نام</th>
-                            <th>نوع</th>
-                            <th>سایز</th>
-                            <th>زمان ایجاد</th>
+                            <th><?= FileManager::t('messages', 'Choose') ?></th>
+                            <th><?= FileManager::t('messages', 'Preview') ?></th>
+                            <th><?= FileManager::t('messages', 'Name') ?></th>
+                            <th><?= FileManager::t('messages', 'Type') ?></th>
+                            <th><?= FileManager::t('messages', 'Size') ?></th>
+                            <th><?= FileManager::t('messages', 'Created Time') ?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -141,6 +142,7 @@ var maxFileCount  = "'.$maxFileCount.'";
 
     <p>
         <?= Html::hiddenInput($filesOutputName, $files == null ? '[]' : $files, ['class' => 'filesData']) ?>
+        <?= Html::hiddenInput('fileManagerLabel', FileManager::t('messages', 'Choose File'), ['class' => 'fileManagerLabel']) ?>
         <?= Html::button('+', ['class' => 'btn btn-info btnAddFile', 'ng-click' => 'addChooseFile()']) ?>
     </p>
 

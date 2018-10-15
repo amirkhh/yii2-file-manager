@@ -71,7 +71,7 @@ class ListAction extends Action
                     'isImage'   => (in_array($model->extension, ['jpg', 'png', 'gif'])),
                     'extension' => $model->extension,
                     'size'      => $this->humanReadableFilesize($model->size),
-                    'createdAt' => $this->persianDate($model->created_at, 'HH:mm - yyyy/MM/dd', 'fa-IR'),
+                    'createdAt' => $this->persianDate($model->created_at, 'HH:mm - yyyy/MM/dd'),
                 ];
             }
         }
