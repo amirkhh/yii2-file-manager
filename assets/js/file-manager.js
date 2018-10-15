@@ -90,6 +90,7 @@ fileManager.controller('fileController', ['$scope', '$http', 'Upload', '$timeout
                 $scope.requestData.models = models;
                 $scope.emptyResult        = false;
                 $scope.models             = $scope.requestData['models'];
+                $scope.directory          = $scope.requestData['directory'];
                 $scope.page.currentPage   = $scope.currentPage;
                 $scope.page.pageSize      = response.data.pagination.defaultPageSize;
                 $scope.page.total         = response.data.pagination.totalCount;

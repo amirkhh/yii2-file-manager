@@ -59,13 +59,14 @@ class ListAction extends Action
         {
             $data['ok']         = true;
             $data['pagination'] = $pagination;
+            $data['directory']  = $this->uploadDirectory;
 
             /** @var File $model */
             foreach ($models as $model)
             {
                 $data['models'][$model->id] = [
                     'id'        => $model->id,
-                    'name'      => $this->uploadDirectory.$model->name,
+                    'name'      => $model->name,
                     'mimeType'  => $model->mime_type,
                     'isImage'   => (in_array($model->extension, ['jpg', 'png', 'gif'])),
                     'extension' => $model->extension,

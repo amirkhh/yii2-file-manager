@@ -100,7 +100,7 @@ var maxFileCount  = "'.$maxFileCount.'";
                                 </div>
                             </th>
                             <td class="text-center ng-isolate-scope">
-                                <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/{{model.name}}"></span>
+                                <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/{{directory}}/{{model.name}}"></span>
                             </td>
                             <td>{{model.name}}</td>
                             <td>{{model.extension}}</td>
