@@ -33,6 +33,7 @@ var maxFileCount  = "'.$maxFileCount.'";
     <?php
     Modal::begin([
         'id' => 'modal',
+        'header' => '<h3>'.FileManager::t('messages', 'File Manager').'</h3>',
         'size' => 'modal-lg',
         'closeButton' => [
             'class' => 'close',
@@ -80,7 +81,7 @@ var maxFileCount  = "'.$maxFileCount.'";
             </div>
             <div class="filemanager-files-table">
                 <div class="table-responsive-wrapper">
-                    <table class="table table-hover table-striped table-align-middle mt-4">
+                    <table class="table table-hover table-striped table-align-middle mt-4 <?= FileManager::t('messages', 'ltr') ?>">
                         <thead class="thead-default">
                         <tr>
                             <th><?= FileManager::t('messages', 'Choose') ?></th>
@@ -101,7 +102,7 @@ var maxFileCount  = "'.$maxFileCount.'";
                                 </div>
                             </th>
                             <td class="text-center ng-isolate-scope">
-                                <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/{{directory}}/{{model.name}}"></span>
+                                <span ng-if="model.isImage"><img class="responsive-img filmanager-thumb" ng-src="<?= Url::base() ?>/{{directory}}/{{model.name}}" data-toggle="tooltip" title="tooltip"></span>
                             </td>
                             <td>{{model.name}}</td>
                             <td>{{model.extension}}</td>

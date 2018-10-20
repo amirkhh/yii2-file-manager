@@ -1,5 +1,5 @@
 .modal-lg{
-    width: 95% !important;
+    width: 70% !important;
 }
 .filemanager {
     min-height: 100%;
@@ -81,7 +81,7 @@
 
 .filemanager-files-table {
     max-width: 100%;
-    overflow-x: auto
+    /*overflow-x: auto*/
 }
 
 .filemanager-actions-column {
@@ -322,6 +322,20 @@ form .progress {
 }
 
 /* Me */
+#fileList table.rtl{
+    direction: rtl;
+}
+#fileList table.ltr{
+    direction: ltr;
+}
+#fileList table.rtl th,#fileList table.rtl td{
+    direction: rtl;
+    text-align: justify;
+}
+#fileList table.ltr th,#fileList table.ltr td{
+    direction: ltr;
+    text-align: justify;
+}
 .progress {
     display: flex;
     width: 100% !important;

@@ -1,4 +1,6 @@
-
+$(document).ready(function(){
+    $('[data-toggle=tooltip]').tooltip();
+});
 
 let fileManager = angular.module('fileManager', ['ngFileUpload', 'bw.paging']);
 

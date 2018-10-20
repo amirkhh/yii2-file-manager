@@ -5,7 +5,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Add File' => 'آپلود',
+    'ltr' => 'rtl',
+    'File Manager' => 'مدیریت فایلها',
+    'Add File' => 'افزودن فایل',
     'Upload' => 'آپلود',
     'Search File Name . . .' => 'نام فایل را جستجو کنید . . .',
     'Choose' => 'انتخاب',
@@ -15,4 +17,5 @@ return [
     'Type' => 'نوع',
     'Size' => 'حجم',
     'Created Time' => 'زمان ساخت',
+    'Please Send "form" Parameter.' => 'لطفا پارامتر فرم را ارسال نمایید.',
 ];
